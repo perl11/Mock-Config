@@ -19,8 +19,16 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-    # XSConfig is readonly, so workaround that
+XSConfig is readonly, so workaround that.
+
     use Mock::Config d_fork => 0, perl_patchlevel => '';
+
+The importer works only dynamically, not lexically yet.
+
+    use Mock::Config;
+    Mock::Config->import(startperl => '');
+    print $Config{startperl}, ' mocked to empty';
+    Mock::Config->unimport;
 
 =head1 SUBROUTINES
 
@@ -46,7 +54,6 @@ sub _set {
 
 sub import {
   my $class = shift;
-  die "Missing Mock::Config key => value arguments" unless @_;
   if (exists &Config::KEYS) {     # compiled XSConfig
     # initialize the mocker
     if (!exists &Config_FETCHorig) {
@@ -88,9 +95,11 @@ Reini Urban, C<< <rurban at cpan.org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-mock-config at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Mock-Config>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests at 
+L<https://github.com/perl11/Mock-Config/issues>.
+
+We will be notified, and then you'll automatically be notified of
+progress on your request as we make changes.
 
 =head1 SUPPORT
 
@@ -126,7 +135,7 @@ L<http://search.cpan.org/dist/Mock-Config/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016 Reini Urban.
+Copyright 2016 cPanel Inc.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
