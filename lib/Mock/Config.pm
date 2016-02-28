@@ -11,11 +11,11 @@ Mock::Config - temporarily set Config or XSConfig values
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -37,6 +37,8 @@ The importer works only dynamically, not lexically yet.
 Set pair of Config values, even for the readonly XSConfig implementation,
 as used in cperl.
 
+It does not store the mocked overrides lexically, just dynamically.
+
 =cut
 
 sub _set {
@@ -46,7 +48,7 @@ sub _set {
     if (exists &Config::KEYS) {     # compiled XSConfig
       $MockConfig{$key} = $val;     # cache new value
     } else {
-      $MockConfig{$key} = $Config{$key}; # store the old value
+      $MockConfig{$key} = tied(%Config::Config)->{$key}; # store the old value
       tied(%Config::Config)->{$key} = $val;      # set uncompiled Config
     }
   }
@@ -73,19 +75,19 @@ sub import {
 
 =head2 unimport
 
-This is unstacked. It undoes all imported Config values at once.
+This is unstacked and not lexical.
+It undoes all imported Config values at once.
 
 =cut
 
 sub unimport {
   my $class = shift;
-  if (exists &Config::KEYS) {     # compiled XSConfig
-    %MockConfig = ();
-  } else {
+  if (!exists &Config::KEYS) {
     for (keys %MockConfig) {
-      tied(%Config)->{$_} = $MockConfig{$_};
+      tied(%Config::Config)->{$_} = $MockConfig{$_};
     }
   }
+  %MockConfig = ();
 }
 
 

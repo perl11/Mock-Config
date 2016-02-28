@@ -2,7 +2,7 @@ NAME
     Mock::Config - temporarily set Config or XSConfig values
 
 VERSION
-    Version 0.01
+    Version 0.02
 
 SYNOPSIS
     XSConfig is readonly, so workaround that.
@@ -21,8 +21,11 @@ SUBROUTINES
     Set pair of Config values, even for the readonly XSConfig
     implementation, as used in cperl.
 
+    It does not store the mocked overrides lexically, just dynamically.
+
   unimport
-    This is unstacked. It undoes all imported Config values at once.
+    This is unstacked and not lexical. It undoes all imported Config values
+    at once.
 
 AUTHOR
     Reini Urban, "<rurban at cpan.org>"
