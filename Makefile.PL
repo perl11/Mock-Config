@@ -24,7 +24,7 @@ WriteMakefile(
   clean => { FILES => 'Mock-Config-*' },
   SIGN  => 1,
   dist	 => {
-    PREOP	=> 'pod2text XS.pm | tee README >$(DISTVNAME)/README; chmod -R u=rwX,go=rX . ;',
+    PREOP	=> 'pod2text \$(VERSION_FROM) | tee README >$(DISTVNAME)/README; chmod -R u=rwX,go=rX . ;',
     COMPRESS	=> 'gzip -9v',
     SUFFIX	=> '.gz',
   },
