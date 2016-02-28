@@ -1,0 +1,10 @@
+.gitignore
+Changes
+MANIFEST
+Makefile.PL
+README
+lib/Mock/Config.pm
+t/0-basic.t
+t/manifest.t
+t/pod-coverage.t
+t/pod.t
