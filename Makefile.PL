@@ -30,9 +30,9 @@ WriteMakefile(
   },
   ($ExtUtils::MakeMaker::VERSION gt '6.46' ?
    ('META_MERGE' =>
-    {"recommends" =>
+    {suggests =>
      {
-       'XSConfig' => '0.19',
+       'XSConfig' => '6.19',
      },
      resources =>
      {

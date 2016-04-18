@@ -1,5 +1,7 @@
 Revision history for Mock-Config
 
+        Remove prereq on XSConfig
+
 0.02    2016-02-28 18:35:44 rurban
         Fixed for PP Config
 
